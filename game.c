@@ -61,10 +61,13 @@ bool game_is_playable (struct Game *game)
 
 bool game_add (struct Game * game, const char *player_name)
 {
-	game->players[game->player_num] = strdup (player_name);
-	game->places[game->player_num] = 0;
-	game->purses[game->player_num] = 0;
-	game->in_penalty_box[game->player_num] = false;
+	int player_num = game->player_num;
+	if (player_num >= 6)
+		return false;
+	game->players[player_num] = strdup (player_name);
+	game->places[player_num] = 0;
+	game->purses[player_num] = 0;
+	game->in_penalty_box[player_num] = false;
 
 	printf ("%s was added\n", player_name);
 	printf ("%s is  number %d\n", player_name, ++game->player_num);
