@@ -1,8 +1,11 @@
 #include "game.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+static void ask_question (struct Game *game);
+static const char *current_category (struct Game *game);
+static bool did_player_win (struct Game *game);
 
 typedef char Question[255];
 
@@ -15,30 +18,21 @@ struct Game
 {
 	int places[6];
 	int purses[6];
-
 	bool in_penalty_box[6];
-
 	int player_num;
-	char *players[50];
-
-	Question *pop_question;
-	Question *science_question;
-	Question *sports_question;
-	Question *rock_question;
-
+	char * players[50];
 	int current_player;
 	bool is_getting_out_of_penalty_box;
+	Question * pop_question;
+	Question * science_question;
+	Question * sports_question;
+	Question * rock_question;
 };
-
-static void ask_question (struct Game *game);
-static const char *current_category (struct Game *game);
-
-static bool did_player_win (struct Game *game);
 
 struct Game * game_new ()
 {
 	int i;
-	struct Game *game;
+	struct Game * game;
 
 	game = malloc (sizeof (struct Game));
 	game->player_num = 0;
@@ -62,25 +56,20 @@ struct Game * game_new ()
 
 bool game_is_playable (struct Game *game)
 {
-	return (game_how_many_players (game) >= 2);
+	return (game->player_num >= 2);
 }
 
 bool game_add (struct Game * game, const char *player_name)
 {
-	game->players[game_how_many_players (game)] = strdup (player_name);
-	game->places[game_how_many_players (game)] = 0;
-	game->purses[game_how_many_players (game)] = 0;
-	game->in_penalty_box[game_how_many_players (game)] = false;
+	game->players[game->player_num] = strdup (player_name);
+	game->places[game->player_num] = 0;
+	game->purses[game->player_num] = 0;
+	game->in_penalty_box[game->player_num] = false;
 
 	printf ("%s was added\n", player_name);
-	printf ("They are player number %d\n", ++game->player_num);
+	printf ("%s is  number %d\n", player_name, ++game->player_num);
 
 	return true;
-}
-
-int game_how_many_players (struct Game *game)
-{
-	return game->player_num;
 }
 
 void game_roll (struct Game *game, int roll)

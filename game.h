@@ -9,7 +9,6 @@ struct Game *game_new ();
 bool game_is_playable (struct Game *game);
 bool game_add (struct Game *game, const char *player_name);
 
-int game_how_many_players (struct Game *game);
 void game_roll (struct Game *game, int roll);
 
 bool game_was_correctly_answered (struct Game *game);
