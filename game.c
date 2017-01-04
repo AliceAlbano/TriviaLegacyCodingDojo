@@ -31,12 +31,11 @@ struct Game
 };
 
 static void ask_question (struct Game *game);
-static void create_rock_question ();
 static const char *current_category (struct Game *game);
 
 static bool did_player_win (struct Game *game);
 
-	struct Game * game_new ()
+struct Game * game_new ()
 {
 	int i;
 	struct Game *game;
@@ -55,23 +54,18 @@ static bool did_player_win (struct Game *game);
 		sprintf (pop_questions[i], "Pop Question %d", i);
 		sprintf (science_questions[i], "Science Question %d", i);
 		sprintf (sports_questions[i], "Sports Question %d", i);
-		create_rock_question (i);
+		sprintf (rock_questions[i], "Rock Question %d", i);
 	}
 
 	return game;
 }
 
-	void create_rock_question (int index)
-{
-	sprintf (rock_questions[index], "Rock Question %d", index);
-}
-
-	bool game_is_playable (struct Game *game)
+bool game_is_playable (struct Game *game)
 {
 	return (game_how_many_players (game) >= 2);
 }
 
-	bool game_add (struct Game * game, const char *player_name)
+bool game_add (struct Game * game, const char *player_name)
 {
 	game->players[game_how_many_players (game)] = strdup (player_name);
 	game->places[game_how_many_players (game)] = 0;
@@ -84,12 +78,12 @@ static bool did_player_win (struct Game *game);
 	return true;
 }
 
-	int game_how_many_players (struct Game *game)
+int game_how_many_players (struct Game *game)
 {
 	return game->player_num;
 }
 
-	void game_roll (struct Game *game, int roll)
+void game_roll (struct Game *game, int roll)
 {
 	char * current_player = game->players[game->current_player];
 	int player_place = game->places[game->current_player];
@@ -138,7 +132,7 @@ static bool did_player_win (struct Game *game);
 
 }
 
-	void ask_question (struct Game *game)
+void ask_question (struct Game *game)
 {
 	if (!strcmp (current_category (game), "Pop"))
 	{
@@ -159,7 +153,7 @@ static bool did_player_win (struct Game *game);
 }
 
 
-	const char * current_category (struct Game *game)
+const char * current_category (struct Game *game)
 {
 	if (game->places[game->current_player] == 0)
 		return "Pop";
@@ -182,7 +176,7 @@ static bool did_player_win (struct Game *game);
 	return "Rock";
 }
 
-	bool game_was_correctly_answered (struct Game * game)
+bool game_was_correctly_answered (struct Game * game)
 {
 	if (game->in_penalty_box[game->current_player])
 	{
@@ -229,7 +223,7 @@ static bool did_player_win (struct Game *game);
 	}
 }
 
-	bool game_wrong_answer (struct Game * game)
+bool game_wrong_answer (struct Game * game)
 {
 	printf ("Question was incorrectly answered\n");
 	printf ("%s was sent to the penalty box\n",
@@ -243,7 +237,7 @@ static bool did_player_win (struct Game *game);
 }
 
 
-	bool did_player_win (struct Game * game)
+bool did_player_win (struct Game * game)
 {
 	return !(game->purses[game->current_player] == 6);
 }

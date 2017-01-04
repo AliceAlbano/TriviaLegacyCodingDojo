@@ -6,7 +6,6 @@
 struct Game;
 
 struct Game *game_new ();
-void game_create_rock_question (struct Game *game, int index);
 bool game_is_playable (struct Game *game);
 bool game_add (struct Game *game, const char *player_name);
 
