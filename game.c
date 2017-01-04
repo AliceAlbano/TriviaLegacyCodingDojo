@@ -54,12 +54,15 @@ struct Game * game_new ()
 	return game;
 }
 
-bool game_is_playable (struct Game *game)
+bool game_is_playable (struct Game * game)
 {
-	return (game->player_num >= 2);
+	if (game->player_num >= 2)
+		return true;
+	else
+		return false;
 }
 
-bool game_add (struct Game * game, const char *player_name)
+bool game_add (struct Game * game, const char * player_name)
 {
 	int player_num = game->player_num;
 	if (player_num >= 6)
@@ -68,9 +71,10 @@ bool game_add (struct Game * game, const char *player_name)
 	game->places[player_num] = 0;
 	game->purses[player_num] = 0;
 	game->in_penalty_box[player_num] = false;
+	game->player_num ++;
 
 	printf ("%s was added\n", player_name);
-	printf ("%s is  number %d\n", player_name, ++game->player_num);
+	printf ("%s is  number %d\n", player_name, game->player_num);
 
 	return true;
 }
