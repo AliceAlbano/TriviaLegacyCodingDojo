@@ -4,8 +4,14 @@
 #include <stdbool.h>
 
 struct Game;
-
 struct Game *game_new ();
+
+int get_place(struct Game *game, int i);
+int get_purse(struct Game *game, int i);
+bool get_in_penalty_box(struct Game *game, int i);
+int get_player_num(struct Game *game);
+int get_current_player(struct Game *game);
+
 bool game_is_playable (struct Game *game);
 bool game_add (struct Game *game, const char *player_name);
 

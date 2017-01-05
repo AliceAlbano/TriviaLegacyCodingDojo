@@ -4,7 +4,7 @@
 #include <string.h>
 
 static void ask_question (struct Game *game);
-static const char *current_category (struct Game *game);
+static const char * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
 
 typedef char Question[255];
@@ -20,6 +20,7 @@ struct Game
 	int purses[6];
 	bool in_penalty_box[6];
 	int player_num;
+//TODO: Correct this horrible bug of a 50 pointers array :(
 	char * players[50];
 	int current_player;
 	bool is_getting_out_of_penalty_box;
@@ -29,12 +30,37 @@ struct Game
 	Question * rock_question;
 };
 
-struct Game * game_new ()
+int get_place(struct Game *game, int i)
+{
+	return game->places[i];
+}
+
+int get_purse(struct Game *game, int i)
+{
+	return game->purses[i];
+}
+
+bool get_in_penalty_box(struct Game *game, int i)
+{
+	return game->in_penalty_box[i];
+}
+
+int get_player_num(struct Game *game)
+{
+	return game->player_num;
+}
+
+int get_current_player(struct Game *game)
+{
+	return game->current_player;
+}
+
+struct Game *game_new ()
 {
 	int i;
-	struct Game * game;
+	struct Game *game;
 
-	game = malloc (sizeof (struct Game));
+	game = (struct Game *) malloc (sizeof (struct Game));
 	game->player_num = 0;
 	game->current_player = 0;
 
@@ -54,7 +80,7 @@ struct Game * game_new ()
 	return game;
 }
 
-bool game_is_playable (struct Game * game)
+bool game_is_playable (struct Game *game)
 {
 	if (game->player_num >= 2)
 		return true;
@@ -62,7 +88,7 @@ bool game_is_playable (struct Game * game)
 		return false;
 }
 
-bool game_add (struct Game * game, const char * player_name)
+bool game_add (struct Game *game, const char * player_name)
 {
 	int player_num = game->player_num;
 	if (player_num >= 6)
@@ -172,7 +198,7 @@ const char * current_category (struct Game *game)
 	return "Rock";
 }
 
-bool game_was_correctly_answered (struct Game * game)
+bool game_was_correctly_answered (struct Game *game)
 {
 	if (game->in_penalty_box[game->current_player])
 	{
@@ -219,7 +245,7 @@ bool game_was_correctly_answered (struct Game * game)
 	}
 }
 
-bool game_wrong_answer (struct Game * game)
+bool game_wrong_answer (struct Game *game)
 {
 	printf ("Question was incorrectly answered\n");
 	printf ("%s was sent to the penalty box\n",
@@ -233,7 +259,7 @@ bool game_wrong_answer (struct Game * game)
 }
 
 
-bool did_player_win (struct Game * game)
+bool did_player_win (struct Game *game)
 {
 	return !(game->purses[game->current_player] == 6);
 }
