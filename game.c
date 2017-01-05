@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_PLAYERS 6
+
 static void ask_question (struct Game *game);
 static const char * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
@@ -16,9 +18,9 @@ Question rock_questions[50];
 
 struct Game
 {
-	int places[6];
-	int purses[6];
-	bool in_penalty_box[6];
+	int places[MAX_PLAYERS];
+	int purses[MAX_PLAYERS];
+	bool in_penalty_box[MAX_PLAYERS];
 	int player_num;
 //TODO: Correct this horrible bug of a 50 pointers array :(
 	char * players[50];
@@ -55,12 +57,18 @@ int get_current_player(struct Game *game)
 	return game->current_player;
 }
 
+int get_available_places(struct Game *game)
+{
+	return (MAX_PLAYERS - game->player_num);
+}
+
 struct Game *game_new ()
 {
 	int i;
 	struct Game *game;
 
 	game = (struct Game *) malloc (sizeof (struct Game));
+	//TODO: test return value of malloc and return NULL if fail
 	game->player_num = 0;
 	game->current_player = 0;
 
@@ -91,7 +99,7 @@ bool game_is_playable (struct Game *game)
 bool game_add (struct Game *game, const char * player_name)
 {
 	int player_num = game->player_num;
-	if (player_num >= 6)
+	if (player_num >= MAX_PLAYERS)
 		return false;
 	game->players[player_num] = strdup (player_name);
 	game->places[player_num] = 0;
