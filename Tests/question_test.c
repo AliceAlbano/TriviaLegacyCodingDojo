@@ -14,13 +14,23 @@ TEST(question, get_set_question_number)
 TEST(question, get_set_question_category)
 {
 	struct Question *question = question_new();
-	set_question_category(question, Rock);
-	ASSERT_EQ(Rock, get_question_category(question));
-	set_question_category(question, Science);
-	ASSERT_EQ(Science, get_question_category(question));
-	set_question_category(question, Sports);
-	ASSERT_EQ(Sports, get_question_category(question));
-	set_question_category(question, Pop);
-	ASSERT_EQ(Pop, get_question_category(question));
+	char c[30];
+	char c1[30] = "Rock";
+	char c2[30] = "Pop";
+	char c3[30] = "Science";
+	char c4[30] = "Sports";
+	set_question_category(question, c1, 1);
+	get_question_category(question, c);
+	ASSERT_EQ(0, strcmp(c1, c));
+	set_question_category(question, c2, 1);
+	get_question_category(question, c);
+	ASSERT_EQ(0, strcmp(c2, c));
+	set_question_category(question, c3, 1);
+	get_question_category(question, c);
+	ASSERT_EQ(0, strcmp(c3, c));
+	set_question_category(question, c4, 1);
+	get_question_category(question, c);
+	ASSERT_EQ(0, strcmp(c4, c));
 	free(question);
 }
+
