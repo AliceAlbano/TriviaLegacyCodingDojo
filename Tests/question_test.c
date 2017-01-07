@@ -15,22 +15,18 @@ TEST(question, get_set_question_category)
 {
 	struct Question *question = question_new();
 	char *c;
-	char c1[30] = "Rock";
-	char c2[30] = "Pop";
-	char c3[30] = "Science";
-	char c4[30] = "Sports";
-	set_question_category(question, c1, 1);
+	set_question_category(question, cat1, 1);
 	c = get_question_category(question);
-	ASSERT_EQ(0, strcmp(c1, c));
-	set_question_category(question, c2, 1);
+	ASSERT_EQ(0, strcmp(cat1, c));
+	set_question_category(question, cat2, 1);
 	c = get_question_category(question);
-	ASSERT_EQ(0, strcmp(c2, c));
-	set_question_category(question, c3, 1);
+	ASSERT_EQ(0, strcmp(cat2, c));
+	set_question_category(question, cat3, 1);
 	c = get_question_category(question);
-	ASSERT_EQ(0, strcmp(c3, c));
-	set_question_category(question, c4, 1);
+	ASSERT_EQ(0, strcmp(cat3, c));
+	set_question_category(question, cat4, 1);
 	c = get_question_category(question);
-	ASSERT_EQ(0, strcmp(c4, c));
+	ASSERT_EQ(0, strcmp(cat4, c));
 	free(question);
 }
 
@@ -38,20 +34,16 @@ TEST(question, get_statement)
 {
 	struct Question *question = question_new();
 	char *c;
-	char c1[30] = "Rock";
-	char c2[30] = "Pop";
-	char c3[30] = "Science";
-	char c4[30] = "Sports";
-	set_question_category(question, c1, 1);
+	set_question_category(question, cat1, 1);
 	c = get_question_statement(question);
 	ASSERT_EQ(0, strcmp("Rock Question 1", c));
-	set_question_category(question, c2, 1);
+	set_question_category(question, cat2, 1);
 	c = get_question_statement(question);
 	ASSERT_EQ(0, strcmp("Pop Question 1", c));
-	set_question_category(question, c3, 1);
+	set_question_category(question, cat3, 1);
 	c = get_question_statement(question);
 	ASSERT_EQ(0, strcmp("Science Question 1", c));
-	set_question_category(question, c4, 1);
+	set_question_category(question, cat4, 1);
 	c = get_question_statement(question);
 	ASSERT_EQ(0, strcmp("Sports Question 1", c));
 }
