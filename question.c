@@ -33,8 +33,8 @@ int get_question_number(struct Question *question)
 	return question->number;
 }
 
-void get_question_category(struct Question *question, char c[30])
+char * get_question_category(struct Question *question)
 {
-	strcpy(c, question->category);
+	return question->category;
 }
 
