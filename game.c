@@ -5,7 +5,7 @@
 
 #define MAX_PLAYERS 6
 
-static void ask_question (struct Game *game);
+static void ask_question (struct Game *game, const char *category);
 static const char * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
 
@@ -136,7 +136,7 @@ void game_roll (struct Game *game, int roll)
 					current_player,
 					player_place);
 			printf ("The category is %s\n", current_category (game));
-			ask_question (game);
+			ask_question (game, current_category(game));
 		}
 		else
 		{
@@ -157,26 +157,26 @@ void game_roll (struct Game *game, int roll)
 				current_player,
 				player_place);
 		printf ("The category is %s\n", current_category (game));
-		ask_question (game);
+		ask_question (game, current_category(game));
 	}
 
 }
 
-void ask_question (struct Game *game)
+void ask_question (struct Game *game, const char *category)
 {
-	if (!strcmp (current_category (game), "Pop"))
+	if (!strcmp (category, "Pop"))
 	{
 		printf ("%s\n", *(++game->pop_question));
 	}
-	if (!strcmp (current_category (game), "Science"))
+	if (!strcmp (category, "Science"))
 	{
 		printf ("%s\n", *(++game->science_question));
 	}
-	if (!strcmp (current_category (game), "Sports"))
+	if (!strcmp (category, "Sports"))
 	{
 		printf ("%s\n", *(++game->sports_question));
 	}
-	if (!strcmp (current_category (game), "Rock"))
+	if (!strcmp (category, "Rock"))
 	{
 		printf ("%s\n", *(++game->rock_question));
 	}
