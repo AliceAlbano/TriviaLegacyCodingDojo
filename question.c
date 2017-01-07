@@ -38,3 +38,7 @@ char * get_question_category(struct Question *question)
 	return question->category;
 }
 
+char * get_question_statement(struct Question *question)
+{
+	return question->statement;
+}
