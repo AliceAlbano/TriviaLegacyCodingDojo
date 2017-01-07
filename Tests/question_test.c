@@ -14,22 +14,22 @@ TEST(question, get_set_question_number)
 TEST(question, get_set_question_category)
 {
 	struct Question *question = question_new();
-	char c[30];
+	char *c;
 	char c1[30] = "Rock";
 	char c2[30] = "Pop";
 	char c3[30] = "Science";
 	char c4[30] = "Sports";
 	set_question_category(question, c1, 1);
-	get_question_category(question, c);
+	c = get_question_category(question);
 	ASSERT_EQ(0, strcmp(c1, c));
 	set_question_category(question, c2, 1);
-	get_question_category(question, c);
+	c = get_question_category(question);
 	ASSERT_EQ(0, strcmp(c2, c));
 	set_question_category(question, c3, 1);
-	get_question_category(question, c);
+	c = get_question_category(question);
 	ASSERT_EQ(0, strcmp(c3, c));
 	set_question_category(question, c4, 1);
-	get_question_category(question, c);
+	c = get_question_category(question);
 	ASSERT_EQ(0, strcmp(c4, c));
 	free(question);
 }
