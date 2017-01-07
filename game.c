@@ -5,12 +5,13 @@
 
 #define MAX_PLAYERS 6
 
+typedef char Question[255];
+
 static void ask_question (struct Game *game, const char *category);
 static const char * next_question(struct Game *game, const char *category);
+static void initialize_questions(Question *category);
 static const char * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
-
-typedef char Question[255];
 
 Question pop_questions[50];
 Question science_questions[50];
@@ -65,7 +66,6 @@ int get_available_places(struct Game *game)
 
 struct Game *game_new ()
 {
-	int i;
 	struct Game *game;
 
 	game = (struct Game *) malloc (sizeof (struct Game));
@@ -78,13 +78,10 @@ struct Game *game_new ()
 	game->sports_question = sports_questions;
 	game->rock_question = rock_questions;
 
-	for (i = 0; i < 50; i++)
-	{
-		sprintf (pop_questions[i], "Pop Question %d", i);
-		sprintf (science_questions[i], "Science Question %d", i);
-		sprintf (sports_questions[i], "Sports Question %d", i);
-		sprintf (rock_questions[i], "Rock Question %d", i);
-	}
+	initialize_questions(pop_questions);
+	initialize_questions(science_questions);
+	initialize_questions(sports_questions);
+	initialize_questions(rock_questions);
 
 	return game;
 }
@@ -161,6 +158,21 @@ void game_roll (struct Game *game, int roll)
 		ask_question (game, current_category(game));
 	}
 
+}
+
+void initialize_questions(Question *category)
+{
+	int i;
+	for (i = 0; i < 50; i++) {
+		if (category == pop_questions)
+			sprintf (pop_questions[i], "Pop Question %d", i);
+		else if (category == science_questions)
+			sprintf (science_questions[i], "Science Question %d", i);
+		else if (category == sports_questions)
+			sprintf (sports_questions[i], "Sports Question %d", i);
+		else if (category == rock_questions)
+			sprintf (rock_questions[i], "Rock Question %d", i);
+	}
 }
 
 const char * next_question(struct Game *game, const char *category)
