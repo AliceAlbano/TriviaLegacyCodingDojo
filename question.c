@@ -22,7 +22,7 @@ void set_question_number(struct Question *question, int number)
 	question->number = number;
 }
 
-void set_question_category(struct Question *question, char c[30], int number)
+void set_question_category(struct Question *question, const char c[30], int number)
 {
 	strcpy(question->category, c);
 	sprintf (question->statement, "%s Question %d", question->category, number);
