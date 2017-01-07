@@ -6,6 +6,7 @@
 #define MAX_PLAYERS 6
 
 static void ask_question (struct Game *game, const char *category);
+static const char * next_question(struct Game *game, const char *category);
 static const char * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
 
@@ -162,26 +163,33 @@ void game_roll (struct Game *game, int roll)
 
 }
 
-void ask_question (struct Game *game, const char *category)
+const char * next_question(struct Game *game, const char *category)
 {
 	if (!strcmp (category, "Pop"))
 	{
-		printf ("%s\n", *(++game->pop_question));
+		return *(++game->pop_question);
 	}
 	if (!strcmp (category, "Science"))
 	{
-		printf ("%s\n", *(++game->science_question));
+		return *(++game->science_question);
 	}
 	if (!strcmp (category, "Sports"))
 	{
-		printf ("%s\n", *(++game->sports_question));
+		return *(++game->sports_question);
 	}
 	if (!strcmp (category, "Rock"))
 	{
-		printf ("%s\n", *(++game->rock_question));
+		return *(++game->rock_question);
 	}
+
+	/* XXX : By default we returns a Rock question. Every body loves rock !*/
+	return *(++game->rock_question);
 }
 
+void ask_question (struct Game *game, const char *category)
+{
+	printf ("%s\n", next_question(game, category));
+}
 
 const char * current_category (struct Game *game)
 {
