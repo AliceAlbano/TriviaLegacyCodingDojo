@@ -34,3 +34,24 @@ TEST(question, get_set_question_category)
 	free(question);
 }
 
+TEST(question, get_statement)
+{
+	struct Question *question = question_new();
+	char *c;
+	char c1[30] = "Rock";
+	char c2[30] = "Pop";
+	char c3[30] = "Science";
+	char c4[30] = "Sports";
+	set_question_category(question, c1, 1);
+	c = get_question_statement(question);
+	ASSERT_EQ(0, strcmp("Rock Question 1", c));
+	set_question_category(question, c2, 1);
+	c = get_question_statement(question);
+	ASSERT_EQ(0, strcmp("Pop Question 1", c));
+	set_question_category(question, c3, 1);
+	c = get_question_statement(question);
+	ASSERT_EQ(0, strcmp("Science Question 1", c));
+	set_question_category(question, c4, 1);
+	c = get_question_statement(question);
+	ASSERT_EQ(0, strcmp("Sports Question 1", c));
+}
