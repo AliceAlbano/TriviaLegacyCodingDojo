@@ -5,19 +5,23 @@
 
 #define MAX_PLAYERS 6
 
-typedef char Question[255];
+//typedef char Question[255];
 
-static void ask_question (struct Game *game, const char *category);
-static const char * next_question(struct Game *game, const char *category);
-static void initialize_questions(Question *category);
-static const char * current_category (struct Game *game);
+const char* c1 = "Pop";
+const char* c2 = "Science";
+const char* c3 = "Sports";
+const char* c4 = "Rock";
+
+static void ask_question (struct Category *category);
+static void initialize_questions(struct Category *category);
+static struct Category * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
-
+/*
 Question pop_questions[50];
 Question science_questions[50];
 Question sports_questions[50];
 Question rock_questions[50];
-
+*/
 struct Game
 {
 	int places[MAX_PLAYERS];
@@ -28,10 +32,15 @@ struct Game
 	char * players[50];
 	int current_player;
 	bool is_getting_out_of_penalty_box;
-	Question * pop_question;
+	struct Category *pop;
+	struct Category *science;
+	struct Category *sports;
+	struct Category *rock;
+/*	Question * pop_question;
 	Question * science_question;
 	Question * sports_question;
 	Question * rock_question;
+	*/
 };
 
 int get_place(struct Game *game, int i)
@@ -73,15 +82,19 @@ struct Game *game_new ()
 	game->player_num = 0;
 	game->current_player = 0;
 
-	game->pop_question = pop_questions;
+/*	game->pop_question = pop_questions;
 	game->science_question = science_questions;
 	game->sports_question = sports_questions;
 	game->rock_question = rock_questions;
-
-	initialize_questions(pop_questions);
-	initialize_questions(science_questions);
-	initialize_questions(sports_questions);
-	initialize_questions(rock_questions);
+*/
+	game->pop = category_new(c1);
+	game->science = category_new(c2);
+	game->sports = category_new(c3);
+	game->rock = category_new(c4);
+	initialize_questions(game->pop);
+	initialize_questions(game->science);
+	initialize_questions(game->sports);
+	initialize_questions(game->rock);
 
 	return game;
 }
@@ -133,8 +146,8 @@ void game_roll (struct Game *game, int roll)
 			printf ("%s's new location is %d\n",
 					current_player,
 					player_place);
-			printf ("The category is %s\n", current_category (game));
-			ask_question (game, current_category(game));
+			printf ("The category is %s\n", get_category_name(current_category (game)));
+			ask_question(current_category(game));
 		}
 		else
 		{
@@ -154,76 +167,47 @@ void game_roll (struct Game *game, int roll)
 		printf ("%s's new location is %d\n",
 				current_player,
 				player_place);
-		printf ("The category is %s\n", current_category (game));
-		ask_question (game, current_category(game));
+		printf ("The category is %s\n", get_category_name(current_category (game)));
+		ask_question(current_category(game));
 	}
 
 }
 
-void initialize_questions(Question *category)
+void initialize_questions(struct Category *category)
 {
 	int i;
-	for (i = 0; i < 50; i++) {
-		if (category == pop_questions)
-			sprintf (pop_questions[i], "Pop Question %d", i);
-		else if (category == science_questions)
-			sprintf (science_questions[i], "Science Question %d", i);
-		else if (category == sports_questions)
-			sprintf (sports_questions[i], "Sports Question %d", i);
-		else if (category == rock_questions)
-			sprintf (rock_questions[i], "Rock Question %d", i);
-	}
+	for (i = 0; i < 50; i++)
+		set_next_question(category);
 }
-
-const char * next_question(struct Game *game, const char *category)
-{
-	if (!strcmp (category, "Pop"))
-	{
-		return *(++game->pop_question);
-	}
-	if (!strcmp (category, "Science"))
-	{
-		return *(++game->science_question);
-	}
-	if (!strcmp (category, "Sports"))
-	{
-		return *(++game->sports_question);
-	}
-	if (!strcmp (category, "Rock"))
-	{
-		return *(++game->rock_question);
-	}
 
 	/* XXX : By default we returns a Rock question. Every body loves rock !*/
-	return *(++game->rock_question);
-}
 
-void ask_question (struct Game *game, const char *category)
+void ask_question (struct Category *category)
 {
-	printf ("%s\n", next_question(game, category));
+	printf ("%s\n", get_question_statement(get_next_question(category)));
 }
 
-const char * current_category (struct Game *game)
+struct Category * current_category (struct Game *game)
 {
 	if (game->places[game->current_player] == 0)
-		return "Pop";
+		return game->pop;
 	if (game->places[game->current_player] == 4)
-		return "Pop";
+		return game->pop;
 	if (game->places[game->current_player] == 8)
-		return "Pop";
+		return game->pop;
 	if (game->places[game->current_player] == 1)
-		return "Science";
+		return game->science;
 	if (game->places[game->current_player] == 5)
-		return "Science";
+		return game->science;
 	if (game->places[game->current_player] == 9)
-		return "Science";
+		return game->science;
 	if (game->places[game->current_player] == 2)
-		return "Sports";
+		return game->sports;
 	if (game->places[game->current_player] == 6)
-		return "Sports";
+		return game->sports;
 	if (game->places[game->current_player] == 10)
-		return "Sports";
-	return "Rock";
+		return game->sports;
+	return game->rock;
 }
 
 bool game_was_correctly_answered (struct Game *game)
