@@ -11,7 +11,7 @@ SOURCES = game.c \
           Tests/category_test.c
 
 all:
-	gcc $(CFLAGS) game.c game_runner.c -o game
+	gcc $(CFLAGS) game.c question.c category.c game_runner.c -o game
 
 test: $(SOURCES) game.h question.h category.h
 	g++ $(CFLAGS) $(CTESTFLAGS) $(SOURCES) $(GTEST_LIB) -o $@
