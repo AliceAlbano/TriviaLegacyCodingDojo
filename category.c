@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <string.h>
 #include "category.h"
 
 struct Category
@@ -16,4 +15,9 @@ struct Category * category_new(const char * name)
 	strcpy(category->name, name);
 	category->next_question = NULL;
 	return category;
+}
+
+char * get_category_name(struct Category *category)
+{
+	return category->name;
 }
