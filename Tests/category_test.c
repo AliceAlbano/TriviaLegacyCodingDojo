@@ -19,3 +19,23 @@ TEST(category, get_next_question)
 	free(category);
 	free(question);
 }
+
+TEST(category, set_next_question)
+{
+	char * statement;
+	struct Question *question = question_new();
+	struct Category *category = category_new("Rock");
+
+	set_next_question(category);
+	question = get_next_question(category);
+	statement = get_question_statement(question);
+	ASSERT_EQ(0, strcmp("Rock Question 1", statement));
+	
+	set_next_question(category);
+	question = get_next_question(category);
+	statement = get_question_statement(question);
+	ASSERT_EQ(0, strcmp("Rock Question 2", statement));
+	free(category);
+	free(question);
+}
+
