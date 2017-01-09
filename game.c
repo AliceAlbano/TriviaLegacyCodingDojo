@@ -5,8 +5,6 @@
 
 #define MAX_PLAYERS 6
 
-//typedef char Question[255];
-
 const char* c1 = "Pop";
 const char* c2 = "Science";
 const char* c3 = "Sports";
@@ -16,12 +14,7 @@ static void ask_question (struct Category *category);
 static void initialize_questions(struct Category *category);
 static struct Category * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
-/*
-Question pop_questions[50];
-Question science_questions[50];
-Question sports_questions[50];
-Question rock_questions[50];
-*/
+
 struct Game
 {
 	int places[MAX_PLAYERS];
@@ -36,11 +29,6 @@ struct Game
 	struct Category *science;
 	struct Category *sports;
 	struct Category *rock;
-/*	Question * pop_question;
-	Question * science_question;
-	Question * sports_question;
-	Question * rock_question;
-	*/
 };
 
 int get_place(struct Game *game, int i)
@@ -82,11 +70,6 @@ struct Game *game_new ()
 	game->player_num = 0;
 	game->current_player = 0;
 
-/*	game->pop_question = pop_questions;
-	game->science_question = science_questions;
-	game->sports_question = sports_questions;
-	game->rock_question = rock_questions;
-*/
 	game->pop = category_new(c1);
 	game->science = category_new(c2);
 	game->sports = category_new(c3);
@@ -179,8 +162,6 @@ void initialize_questions(struct Category *category)
 	for (i = 0; i < 50; i++)
 		set_next_question(category);
 }
-
-	/* XXX : By default we returns a Rock question. Every body loves rock !*/
 
 void ask_question (struct Category *category)
 {
