@@ -4,7 +4,7 @@
 struct Category
 {
 	char name[20];
-	Question * next_question;
+	struct Question * next_question;
 	int current_question ;
 };
 
