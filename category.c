@@ -21,3 +21,8 @@ char * get_category_name(struct Category *category)
 {
 	return category->name;
 }
+
+struct Question * get_next_question(struct Category *category)
+{
+	return category->next_question;
+}
