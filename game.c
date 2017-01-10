@@ -159,23 +159,12 @@ void ask_question (struct Category *category)
 
 struct Category * current_category (struct Game *game)
 {
-	if (game->places[game->current_player] == 0)
+	int place = game->places[game->current_player];
+	if ((place% 4) == 0)
 		return game->pop;
-	if (game->places[game->current_player] == 4)
-		return game->pop;
-	if (game->places[game->current_player] == 8)
-		return game->pop;
-	if (game->places[game->current_player] == 1)
+	if ((place % 4) == 1)
 		return game->science;
-	if (game->places[game->current_player] == 5)
-		return game->science;
-	if (game->places[game->current_player] == 9)
-		return game->science;
-	if (game->places[game->current_player] == 2)
-		return game->sports;
-	if (game->places[game->current_player] == 6)
-		return game->sports;
-	if (game->places[game->current_player] == 10)
+	if ((place % 4) == 2)
 		return game->sports;
 	return game->rock;
 }
