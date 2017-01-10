@@ -107,6 +107,7 @@ bool game_is_playable (struct Game *game)
 		return false;
 }
 
+//TODO: always returns true
 bool game_add (struct Game *game, const char * player_name)
 {
 	int player_num = get_player_num(game);
