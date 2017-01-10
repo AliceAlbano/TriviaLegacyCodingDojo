@@ -19,6 +19,7 @@ static void set_player_place(struct Game *game, int player_num, int place);
 static void set_player_purse(struct Game *game, int player_num, int purse);
 static void set_in_penalty_box(struct Game *game, int player_num, bool b);
 static void set_player_num(struct Game *game, int n);
+static char * get_current_player_name(struct Game *game);
 
 struct Game
 {
@@ -74,6 +75,10 @@ int get_current_player(struct Game *game)
 int get_available_places(struct Game *game)
 {
 	return (MAX_PLAYERS - game->player_num);
+}
+char * get_current_player_name(struct Game *game)
+{
+	return game->players[get_current_player(game)];
 }
 
 struct Game *game_new ()
@@ -142,9 +147,9 @@ void set_player_purse(struct Game *game, int player_num, int purse)
 
 void game_roll (struct Game *game, int roll)
 {
-	char * current_player = game->players[game->current_player];
+	char * current_player_name = get_current_player_name(game);
 	int player_place = game->places[game->current_player];
-	printf ("%s is the current player\n", current_player);
+	printf ("%s is the current player\n", current_player_name);
 	printf ("They have rolled a %d\n", roll);
 
 	if (game->in_penalty_box[game->current_player])
@@ -154,13 +159,13 @@ void game_roll (struct Game *game, int roll)
 			game->is_getting_out_of_penalty_box = true;
 
 			printf ("%s is getting out of the penalty box\n",
-					current_player);
+					current_player_name);
 			game->places[game->current_player] = player_place + roll;
 			if (player_place > 11)
 				game->places[game->current_player] = player_place - 12;
 
 			printf ("%s's new location is %d\n",
-					current_player,
+					current_player_name,
 					player_place);
 			printf ("The category is %s\n", get_category_name(current_category (game)));
 			ask_question(current_category(game));
@@ -168,7 +173,7 @@ void game_roll (struct Game *game, int roll)
 		else
 		{
 			printf ("%s is not getting out of the penalty box\n",
-					current_player);
+					current_player_name);
 			game->is_getting_out_of_penalty_box = false;
 		}
 	}
@@ -181,7 +186,7 @@ void game_roll (struct Game *game, int roll)
 				player_place - 12;
 
 		printf ("%s's new location is %d\n",
-				current_player,
+				current_player_name,
 				player_place);
 		printf ("The category is %s\n", get_category_name(current_category (game)));
 		ask_question(current_category(game));
