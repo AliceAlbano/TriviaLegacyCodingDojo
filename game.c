@@ -155,10 +155,11 @@ void game_roll (struct Game *game, int roll)
 {
 	char * current_player_name = get_current_player_name(game);
 	int player_place = get_player_place(game, get_current_player(game));
+	int current_player = get_current_player(game);
 	printf ("%s is the current player\n", current_player_name);
 	printf ("They have rolled a %d\n", roll);
 
-	if (get_in_penalty_box(game, get_current_player(game)))
+	if (get_in_penalty_box(game, current_player))
 	{
 		if (roll % 2 != 0)
 		{
@@ -166,9 +167,10 @@ void game_roll (struct Game *game, int roll)
 
 			printf ("%s is getting out of the penalty box\n",
 					current_player_name);
-			game->places[game->current_player] = player_place + roll;
+
+			set_player_place(game, current_player, player_place + roll);
 			if (player_place > 11)
-				game->places[game->current_player] = player_place - 12;
+				set_player_place(game, current_player, player_place - 12);
 
 			printf ("%s's new location is %d\n",
 					current_player_name,
