@@ -16,6 +16,7 @@ static bool did_player_win (struct Game *game);
 static void initialize_player(struct Game *game);
 static void add_player_name(struct Game *game, const char * player_name);
 static void set_player_place(struct Game *game, int player_num, int place);
+static void set_player_purse(struct Game *game, int player_num, int purse);
 
 struct Game
 {
@@ -101,7 +102,7 @@ bool game_add (struct Game *game, const char * player_name)
 		return false;
 	add_player_name(game, player_name);
 	set_player_place(game, player_num, 0);
-	game->purses[player_num] = 0;
+	set_player_purse(game, player_num, 0);
 	game->in_penalty_box[player_num] = false;
 	game->player_num ++;
 
@@ -119,6 +120,11 @@ void add_player_name(struct Game *game, const char * player_name)
 void set_player_place(struct Game *game, int player_num, int place)
 {
 	game->places[player_num] = place;
+}
+
+void set_player_purse(struct Game *game, int player_num, int purse)
+{
+	game->purses[player_num] = purse;
 }
 
 void game_roll (struct Game *game, int roll)
