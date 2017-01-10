@@ -158,7 +158,7 @@ void game_roll (struct Game *game, int roll)
 	printf ("%s is the current player\n", current_player_name);
 	printf ("They have rolled a %d\n", roll);
 
-	if (game->in_penalty_box[game->current_player])
+	if (get_in_penalty_box(game, get_current_player(game)))
 	{
 		if (roll % 2 != 0)
 		{
