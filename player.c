@@ -4,6 +4,7 @@
 
 struct Player
 {
+	int id;
 	char name[30];
 	int place;
 	int purse;
@@ -14,11 +15,22 @@ struct Player * player_new(const char *name)
 {
 	struct Player *player;
 	player = (struct Player *) malloc (sizeof (struct Player));
+	player->id = -1;
 	strcpy(player->name, name);
 	player->place = 0;
 	player->purse = 0;
 	player->in_penalty_box = false;
 	return player;
+}
+
+void set_player_id(struct Player *player, int id)
+{
+	player->id = id;
+}
+
+int get_player_id(struct Player *player)
+{
+	return player->id;
 }
 
 char * get_player_name(struct Player *player)
