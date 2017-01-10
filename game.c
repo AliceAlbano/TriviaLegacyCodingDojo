@@ -11,7 +11,6 @@ const char* c3 = "Sports";
 const char* c4 = "Rock";
 
 static void ask_question (struct Category *category);
-static void initialize_questions(struct Category *category);
 static struct Category * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
 
@@ -74,10 +73,6 @@ struct Game *game_new ()
 	game->science = category_new(c2);
 	game->sports = category_new(c3);
 	game->rock = category_new(c4);
-	initialize_questions(game->pop);
-	initialize_questions(game->science);
-	initialize_questions(game->sports);
-	initialize_questions(game->rock);
 
 	return game;
 }
@@ -156,15 +151,9 @@ void game_roll (struct Game *game, int roll)
 
 }
 
-void initialize_questions(struct Category *category)
-{
-	int i;
-	for (i = 0; i < 50; i++)
-		set_next_question(category);
-}
-
 void ask_question (struct Category *category)
 {
+	set_next_question(category);
 	printf ("%s\n", get_question_statement(get_next_question(category)));
 }
 
