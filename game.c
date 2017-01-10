@@ -187,11 +187,9 @@ void game_roll (struct Game *game, int roll)
 	}
 	else
 	{
-		game->places[game->current_player] =
-			player_place + roll;
+		set_player_place(game, current_player, player_place + roll);
 		if (player_place > 11)
-			game->places[game->current_player] =
-				player_place - 12;
+			set_player_place(game, current_player, player_place - 12);
 
 		printf ("%s's new location is %d\n",
 				current_player_name,
