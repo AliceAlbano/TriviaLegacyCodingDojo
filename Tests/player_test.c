@@ -27,3 +27,14 @@ TEST(player, get_set_player_purse)
 	ASSERT_EQ(12, get_player_purse(player));
 	free(player);
 }
+
+TEST(player, get_set_in_penalty_box)
+{
+	struct Player *player = player_new("Alice");
+	ASSERT_EQ(false, get_player_in_penalty_box(player));
+	set_player_in_penalty_box(player, true);
+	ASSERT_EQ(true, get_player_in_penalty_box(player));
+	set_player_in_penalty_box(player, false);
+	ASSERT_EQ(false, get_player_in_penalty_box(player));
+	free(player);
+}
