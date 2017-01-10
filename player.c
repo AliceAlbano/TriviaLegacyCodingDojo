@@ -4,7 +4,7 @@
 
 struct Player
 {
-	char *name;
+	char name[30];
 	int place;
 	int purse;
 	bool in_penalty_box;
@@ -19,4 +19,9 @@ struct Player * player_new(const char *name)
 	player->purse = 0;
 	player->in_penalty_box = false;
 	return player;
+}
+
+char * get_player_name(struct Player *player)
+{
+	return player->name;
 }
