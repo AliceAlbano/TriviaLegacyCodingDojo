@@ -18,6 +18,7 @@ static void add_player_name(struct Game *game, const char * player_name);
 static void set_player_place(struct Game *game, int player_num, int place);
 static void set_player_purse(struct Game *game, int player_num, int purse);
 static void set_in_penalty_box(struct Game *game, int player_num, bool b);
+static void set_player_num(struct Game *game, int n);
 
 struct Game
 {
@@ -58,6 +59,11 @@ void set_in_penalty_box(struct Game *game, int player_num, bool b)
 int get_player_num(struct Game *game)
 {
 	return game->player_num;
+}
+
+void set_player_num(struct Game *game, int n)
+{
+	game->player_num = n;
 }
 
 int get_current_player(struct Game *game)
@@ -110,7 +116,7 @@ bool game_add (struct Game *game, const char * player_name)
 	set_player_place(game, player_num, 0);
 	set_player_purse(game, player_num, 0);
 	set_in_penalty_box(game, player_num, false);
-	game->player_num ++;
+	set_player_num(game, player_num + 1);
 
 	printf ("%s was added\n", player_name);
 	printf ("%s is  number %d\n", player_name, game->player_num);
