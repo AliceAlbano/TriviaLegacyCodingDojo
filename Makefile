@@ -9,7 +9,8 @@ SOURCES = game.c \
           Tests/question_test.c \
           category.c \
           Tests/category_test.c \
-          player.c
+          player.c \
+          Tests/player_test.c
 
 all:
 	gcc $(CFLAGS) game.c question.c category.c player.c game_runner.c -o game
