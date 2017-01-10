@@ -35,3 +35,13 @@ int get_player_place(struct Player *player)
 {
 	return player->place;
 }
+
+void set_player_purse(struct Player *player, int purse)
+{
+	player->purse = purse;
+}
+
+int get_player_purse(struct Player *player)
+{
+	return player->purse;
+}
