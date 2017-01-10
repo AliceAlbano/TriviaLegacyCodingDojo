@@ -86,7 +86,7 @@ void initialize_player(struct Game *game)
 
 bool game_is_playable (struct Game *game)
 {
-	if (game->player_num >= 2)
+	if (get_player_num(game) >= 2)
 		return true;
 	else
 		return false;
