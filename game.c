@@ -276,12 +276,12 @@ bool game_wrong_answer (struct Game *game)
 {
 	printf ("Question was incorrectly answered\n");
 	printf ("%s was sent to the penalty box\n",
-			game->players[game->current_player]);
-	game->in_penalty_box[game->current_player] = true;
+			get_current_player_name(game));
+	set_in_penalty_box(game, get_current_player(game), true);
 
-	game->current_player++;
-	if (game->current_player == game->player_num)
-		game->current_player = 0;
+	set_current_player(game, get_current_player(game) + 1);
+	if (get_current_player(game) == get_player_num(game))
+		set_current_player(game, 0);
 	return true;
 }
 
