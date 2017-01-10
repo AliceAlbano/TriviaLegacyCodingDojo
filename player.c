@@ -45,3 +45,13 @@ int get_player_purse(struct Player *player)
 {
 	return player->purse;
 }
+
+void set_player_in_penalty_box(struct Player *player, bool b)
+{
+	player->in_penalty_box = b;
+}
+
+bool get_player_in_penalty_box(struct Player *player)
+{
+	return player->in_penalty_box;
+}
