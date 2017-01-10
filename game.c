@@ -119,7 +119,7 @@ bool game_add (struct Game *game, const char * player_name)
 	set_player_num(game, player_num + 1);
 
 	printf ("%s was added\n", player_name);
-	printf ("%s is  number %d\n", player_name, game->player_num);
+	printf ("%s is  number %d\n", player_name, get_player_num(game));
 
 	return true;
 }
