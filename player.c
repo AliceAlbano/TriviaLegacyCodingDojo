@@ -11,12 +11,12 @@ struct Player
 	bool in_penalty_box;
 };
 
-struct Player * player_new(const char *name)
+struct Player * player_new()
 {
 	struct Player *player;
 	player = (struct Player *) malloc (sizeof (struct Player));
 	player->id = -1;
-	strcpy(player->name, name);
+	strcpy(player->name, "");
 	player->place = 0;
 	player->purse = 0;
 	player->in_penalty_box = false;
@@ -36,6 +36,11 @@ int get_player_id(struct Player *player)
 char * get_player_name(struct Player *player)
 {
 	return player->name;
+}
+
+void set_player_name(struct Player *player, const char *name)
+{
+	strcpy(player->name, name);
 }
 
 void set_player_place(struct Player *player, int place)
