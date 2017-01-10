@@ -14,6 +14,7 @@ static void ask_question (struct Category *category);
 static struct Category * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
 static void initialize_player(struct Game *game);
+static void add_player_name(struct Game *game, const char * player_name);
 
 struct Game
 {
@@ -94,10 +95,10 @@ bool game_is_playable (struct Game *game)
 
 bool game_add (struct Game *game, const char * player_name)
 {
-	int player_num = game->player_num;
+	int player_num = get_player_num(game);
 	if (player_num >= MAX_PLAYERS)
 		return false;
-	game->players[player_num] = strdup (player_name);
+	add_player_name(game, player_name);
 	game->places[player_num] = 0;
 	game->purses[player_num] = 0;
 	game->in_penalty_box[player_num] = false;
@@ -107,6 +108,11 @@ bool game_add (struct Game *game, const char * player_name)
 	printf ("%s is  number %d\n", player_name, game->player_num);
 
 	return true;
+}
+
+void add_player_name(struct Game *game, const char * player_name)
+{
+	game->players[get_player_num(game)] = strdup (player_name);
 }
 
 void game_roll (struct Game *game, int roll)
