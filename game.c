@@ -20,12 +20,7 @@ static void set_current_player(struct Game *game, int n);
 struct Game
 {
 	struct Player *players[MAX_PLAYERS];
-//	int places[MAX_PLAYERS];
-//	int purses[MAX_PLAYERS];
-//	bool in_penalty_box[MAX_PLAYERS];
 	int player_num;
-//TODO: Correct this horrible bug of a 50 pointers array :(
-//	char * players[50];
 	int current_player;
 	bool is_getting_out_of_penalty_box;
 	struct Category *pop;
