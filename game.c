@@ -288,5 +288,5 @@ bool game_wrong_answer (struct Game *game)
 
 bool did_player_win (struct Game *game)
 {
-	return !(game->purses[game->current_player] == 6);
+	return !(get_purse(game, get_current_player(game)) == 6);
 }
