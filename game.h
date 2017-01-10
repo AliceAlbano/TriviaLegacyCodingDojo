@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <stdbool.h>
+#include "category.h"
 
 struct Game;
 struct Game *game_new ();
