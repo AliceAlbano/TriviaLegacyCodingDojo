@@ -21,6 +21,7 @@ static void set_in_penalty_box(struct Game *game, int player_num, bool b);
 static void set_player_num(struct Game *game, int n);
 static char * get_current_player_name(struct Game *game);
 static int get_player_place(struct Game *game, int player_num);
+static void set_current_player(struct Game *game, int n);
 
 struct Game
 {
@@ -68,6 +69,10 @@ void set_player_num(struct Game *game, int n)
 	game->player_num = n;
 }
 
+void set_current_player(struct Game *game, int n)
+{
+	game->current_player = n;
+}
 int get_current_player(struct Game *game)
 {
 	return game->current_player;
@@ -220,46 +225,48 @@ struct Category * current_category (struct Game *game)
 
 bool game_was_correctly_answered (struct Game *game)
 {
-	if (game->in_penalty_box[game->current_player])
+	int current_player = get_current_player(game);
+	char * current_player_name = get_current_player_name(game);
+	if (get_in_penalty_box(game, current_player))
 	{
 		if (game->is_getting_out_of_penalty_box)
 		{
 			printf ("Answer was correct!!!!\n");
-			game->purses[game->current_player]++;
-			printf ("%s now has %d Gold Coins.\n",
-					game->players[game->current_player],
-					game->purses[game->current_player]);
+			set_player_purse(game, current_player, get_purse(game, current_player) + 1);
+			printf ("%s now has %d Gold Coins.\n", current_player_name, get_purse(game, current_player));
 			bool winner = did_player_win (game);
-			game->current_player++;
-			if (game->current_player == game->player_num)
-				game->current_player = 0;
+			set_current_player(game, current_player + 1);
+			current_player = get_current_player(game);
+			if (current_player == get_player_num(game))
+				set_current_player(game, 0);
+				current_player = get_current_player(game);
 
 			return winner;
 		}
 		else
 		{
-			game->current_player++;
-			if (game->current_player == game->player_num)
-				game->current_player = 0;
+			set_current_player(game, current_player + 1);
+			current_player = get_current_player(game);
+			if (current_player == get_player_num(game))
+				set_current_player(game, 0);
+				current_player = get_current_player(game);
 			return true;
 		}
-
-
-
 	}
 	else
 	{
 
 		printf ("Answer was corrent!!!!\n");
-		game->purses[game->current_player]++;
+		set_player_purse(game, current_player, get_purse(game, current_player) + 1);
 		printf ("%s now has %d Gold Coins.\n",
-				game->players[game->current_player],
-				game->purses[game->current_player]);
+				current_player_name, get_purse(game, current_player));
 
 		bool winner = did_player_win (game);
-		game->current_player++;
-		if (game->current_player == game->player_num)
-			game->current_player = 0;
+		set_current_player(game, current_player + 1);
+		current_player = get_current_player(game);
+		if (current_player == get_player_num(game))
+			set_current_player(game, 0);
+			current_player = get_current_player(game);
 
 		return winner;
 	}
