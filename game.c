@@ -20,6 +20,7 @@ static void set_player_purse(struct Game *game, int player_num, int purse);
 static void set_in_penalty_box(struct Game *game, int player_num, bool b);
 static void set_player_num(struct Game *game, int n);
 static char * get_current_player_name(struct Game *game);
+static int get_player_place(struct Game *game, int player_num);
 
 struct Game
 {
@@ -79,6 +80,11 @@ int get_available_places(struct Game *game)
 char * get_current_player_name(struct Game *game)
 {
 	return game->players[get_current_player(game)];
+}
+
+int get_player_place(struct Game *game, int player_num)
+{
+	return game->places[player_num];
 }
 
 struct Game *game_new ()
@@ -148,7 +154,7 @@ void set_player_purse(struct Game *game, int player_num, int purse)
 void game_roll (struct Game *game, int roll)
 {
 	char * current_player_name = get_current_player_name(game);
-	int player_place = game->places[game->current_player];
+	int player_place = get_player_place(game, get_current_player(game));
 	printf ("%s is the current player\n", current_player_name);
 	printf ("They have rolled a %d\n", roll);
 
