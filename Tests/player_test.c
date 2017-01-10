@@ -10,3 +10,11 @@ TEST(player, get_player_name)
 	free(player);
 }
 
+TEST(player, get_set_player_place)
+{
+	struct Player *player = player_new("Alice");
+	ASSERT_EQ(0, get_player_place(player));
+	set_player_place(player, 12);
+	ASSERT_EQ(12, get_player_place(player));
+	free(player);
+}
