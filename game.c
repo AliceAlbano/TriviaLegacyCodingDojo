@@ -13,6 +13,7 @@ const char* c4 = "Rock";
 static void ask_question (struct Category *category);
 static struct Category * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
+static void initialize_player(struct Game *game);
 
 struct Game
 {
@@ -66,8 +67,8 @@ struct Game *game_new ()
 
 	game = (struct Game *) malloc (sizeof (struct Game));
 	//TODO: test return value of malloc and return NULL if fail
-	game->player_num = 0;
-	game->current_player = 0;
+
+	initialize_player(game);
 
 	game->pop = category_new(c1);
 	game->science = category_new(c2);
@@ -75,6 +76,12 @@ struct Game *game_new ()
 	game->rock = category_new(c4);
 
 	return game;
+}
+
+void initialize_player(struct Game *game)
+{
+	game->player_num = 0;
+	game->current_player = 0;
 }
 
 bool game_is_playable (struct Game *game)
