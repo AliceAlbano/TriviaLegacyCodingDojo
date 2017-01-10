@@ -2,10 +2,11 @@
 
 struct Player;
 
-struct Player *player_new(const char *name);
+struct Player *player_new();
 void set_player_id(struct Player *player, int id);
 int get_player_id(struct Player *player);
 char * get_player_name(struct Player *player);
+void set_player_name(struct Player *player, const char *name);
 void set_player_place(struct Player *player, int place);
 int get_player_place(struct Player *player);
 void set_player_purse(struct Player *player, int purse);
