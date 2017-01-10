@@ -25,3 +25,13 @@ char * get_player_name(struct Player *player)
 {
 	return player->name;
 }
+
+void set_player_place(struct Player *player, int place)
+{
+	player->place = place;
+}
+
+int get_player_place(struct Player *player)
+{
+	return player->place;
+}
