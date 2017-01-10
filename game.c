@@ -14,23 +14,18 @@ static void ask_question (struct Category *category);
 static struct Category * current_category (struct Game *game);
 static bool did_player_win (struct Game *game);
 static void initialize_player(struct Game *game);
-static void add_player_name(struct Game *game, const char * player_name);
-static void set_player_place(struct Game *game, int player_num, int place);
-static void set_player_purse(struct Game *game, int player_num, int purse);
-static void set_in_penalty_box(struct Game *game, int player_num, bool b);
 static void set_player_num(struct Game *game, int n);
-static char * get_current_player_name(struct Game *game);
-static int get_player_place(struct Game *game, int player_num);
 static void set_current_player(struct Game *game, int n);
 
 struct Game
 {
-	int places[MAX_PLAYERS];
-	int purses[MAX_PLAYERS];
-	bool in_penalty_box[MAX_PLAYERS];
+	struct Player *players[MAX_PLAYERS];
+//	int places[MAX_PLAYERS];
+//	int purses[MAX_PLAYERS];
+//	bool in_penalty_box[MAX_PLAYERS];
 	int player_num;
 //TODO: Correct this horrible bug of a 50 pointers array :(
-	char * players[50];
+//	char * players[50];
 	int current_player;
 	bool is_getting_out_of_penalty_box;
 	struct Category *pop;
@@ -38,26 +33,6 @@ struct Game
 	struct Category *sports;
 	struct Category *rock;
 };
-
-int get_place(struct Game *game, int i)
-{
-	return game->places[i];
-}
-
-int get_purse(struct Game *game, int i)
-{
-	return game->purses[i];
-}
-
-bool get_in_penalty_box(struct Game *game, int i)
-{
-	return game->in_penalty_box[i];
-}
-
-void set_in_penalty_box(struct Game *game, int player_num, bool b)
-{
-	game->in_penalty_box[player_num] = b;
-}
 
 int get_player_num(struct Game *game)
 {
@@ -82,15 +57,6 @@ int get_available_places(struct Game *game)
 {
 	return (MAX_PLAYERS - game->player_num);
 }
-char * get_current_player_name(struct Game *game)
-{
-	return game->players[get_current_player(game)];
-}
-
-int get_player_place(struct Game *game, int player_num)
-{
-	return game->places[player_num];
-}
 
 struct Game *game_new ()
 {
@@ -111,6 +77,11 @@ struct Game *game_new ()
 
 void initialize_player(struct Game *game)
 {
+	int i;
+	for (i=0; i < MAX_PLAYERS; i++)
+	{
+		game->players[i] = player_new();
+	}
 	game->player_num = 0;
 	game->current_player = 0;
 }
@@ -123,16 +94,13 @@ bool game_is_playable (struct Game *game)
 		return false;
 }
 
-//TODO: always returns true
-bool game_add (struct Game *game, const char * player_name)
+bool game_add (struct Game *game, char * player_name)
 {
 	int player_num = get_player_num(game);
 	if (player_num >= MAX_PLAYERS)
 		return false;
-	add_player_name(game, player_name);
-	set_player_place(game, player_num, 0);
-	set_player_purse(game, player_num, 0);
-	set_in_penalty_box(game, player_num, false);
+	set_player_id(game->players[player_num], player_num);
+	set_player_name(game->players[player_num], player_name);
 	set_player_num(game, player_num + 1);
 
 	printf ("%s was added\n", player_name);
@@ -141,30 +109,15 @@ bool game_add (struct Game *game, const char * player_name)
 	return true;
 }
 
-void add_player_name(struct Game *game, const char * player_name)
-{
-	game->players[get_player_num(game)] = strdup (player_name);
-}
-
-void set_player_place(struct Game *game, int player_num, int place)
-{
-	game->places[player_num] = place;
-}
-
-void set_player_purse(struct Game *game, int player_num, int purse)
-{
-	game->purses[player_num] = purse;
-}
-
 void game_roll (struct Game *game, int roll)
 {
-	char * current_player_name = get_current_player_name(game);
-	int player_place = get_player_place(game, get_current_player(game));
+	char * current_player_name = get_player_name(game->players[get_current_player(game)]);
+	int player_place = get_player_place(game->players[get_current_player(game)]);
 	int current_player = get_current_player(game);
 	printf ("%s is the current player\n", current_player_name);
 	printf ("They have rolled a %d\n", roll);
 
-	if (get_in_penalty_box(game, current_player))
+	if (get_player_in_penalty_box(game->players[current_player]))
 	{
 		if (roll % 2 != 0)
 		{
@@ -173,9 +126,9 @@ void game_roll (struct Game *game, int roll)
 			printf ("%s is getting out of the penalty box\n",
 					current_player_name);
 
-			set_player_place(game, current_player, player_place + roll);
+			set_player_place(game->players[current_player], player_place + roll);
 			if (player_place > 11)
-				set_player_place(game, current_player, player_place - 12);
+				set_player_place(game->players[current_player], player_place - 12);
 
 			printf ("%s's new location is %d\n",
 					current_player_name,
@@ -192,9 +145,9 @@ void game_roll (struct Game *game, int roll)
 	}
 	else
 	{
-		set_player_place(game, current_player, player_place + roll);
+		set_player_place(game->players[current_player], player_place + roll);
 		if (player_place > 11)
-			set_player_place(game, current_player, player_place - 12);
+			set_player_place(game->players[current_player], player_place - 12);
 
 		printf ("%s's new location is %d\n",
 				current_player_name,
@@ -213,7 +166,7 @@ void ask_question (struct Category *category)
 
 struct Category * current_category (struct Game *game)
 {
-	int place = game->places[game->current_player];
+	int place = get_player_place(game->players[game->current_player]);
 	if ((place% 4) == 0)
 		return game->pop;
 	if ((place % 4) == 1)
@@ -226,14 +179,14 @@ struct Category * current_category (struct Game *game)
 bool game_was_correctly_answered (struct Game *game)
 {
 	int current_player = get_current_player(game);
-	char * current_player_name = get_current_player_name(game);
-	if (get_in_penalty_box(game, current_player))
+	char * current_player_name = get_player_name(game->players[current_player]);
+	if (get_player_in_penalty_box(game->players[current_player]))
 	{
 		if (game->is_getting_out_of_penalty_box)
 		{
 			printf ("Answer was correct!!!!\n");
-			set_player_purse(game, current_player, get_purse(game, current_player) + 1);
-			printf ("%s now has %d Gold Coins.\n", current_player_name, get_purse(game, current_player));
+			set_player_purse(game->players[current_player], get_player_purse(game->players[current_player]) + 1);
+			printf ("%s now has %d Gold Coins.\n", current_player_name, get_player_purse(game->players[current_player]));
 			bool winner = did_player_win (game);
 			set_current_player(game, current_player + 1);
 			current_player = get_current_player(game);
@@ -256,10 +209,10 @@ bool game_was_correctly_answered (struct Game *game)
 	else
 	{
 
-		printf ("Answer was corrent!!!!\n");
-		set_player_purse(game, current_player, get_purse(game, current_player) + 1);
+		printf ("Answer was correct!!!!\n");
+		set_player_purse(game->players[current_player], get_player_purse(game->players[current_player]) + 1);
 		printf ("%s now has %d Gold Coins.\n",
-				current_player_name, get_purse(game, current_player));
+				current_player_name, get_player_purse(game->players[current_player]));
 
 		bool winner = did_player_win (game);
 		set_current_player(game, current_player + 1);
@@ -276,8 +229,8 @@ bool game_wrong_answer (struct Game *game)
 {
 	printf ("Question was incorrectly answered\n");
 	printf ("%s was sent to the penalty box\n",
-			get_current_player_name(game));
-	set_in_penalty_box(game, get_current_player(game), true);
+			get_player_name(game->players[get_current_player(game)]));
+	set_player_in_penalty_box(game->players[get_current_player(game)], true);
 
 	set_current_player(game, get_current_player(game) + 1);
 	if (get_current_player(game) == get_player_num(game))
@@ -288,5 +241,5 @@ bool game_wrong_answer (struct Game *game)
 
 bool did_player_win (struct Game *game)
 {
-	return !(get_purse(game, get_current_player(game)) == 6);
+	return !(get_player_purse(game->players[ get_current_player(game)]) == 6);
 }
