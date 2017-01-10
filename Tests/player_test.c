@@ -10,6 +10,15 @@ TEST(player, get_player_name)
 	free(player);
 }
 
+TEST(player, get_set_player_id)
+{
+	struct Player *player = player_new("Alice");
+	ASSERT_EQ(-1, get_player_id(player));
+	set_player_id(player, 12);
+	ASSERT_EQ(12, get_player_id(player));
+	free(player);
+}
+
 TEST(player, get_set_player_place)
 {
 	struct Player *player = player_new("Alice");
