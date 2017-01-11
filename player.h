@@ -15,3 +15,4 @@ void set_player_in_penalty_box(struct Player *player, bool b);
 bool get_player_in_penalty_box(struct Player *player);
 void move_player(struct Player *player, int roll);
 void correct_answer(struct Player *player);
+bool get_out_of_penalty_box(struct Player *player, int roll);
