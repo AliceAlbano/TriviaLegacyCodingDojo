@@ -111,8 +111,7 @@ void game_roll(struct Game *game, int roll)
 	int current_player = get_current_player(game);
 	struct Player *player = player_new();
 	player = game->players[current_player];
-	printf("%s is the current player\n", current_player_name);
-	printf("They have rolled a %d\n", roll);
+	printf("Player %s has rolled a %d\n", current_player_name, roll);
 
 	if (get_player_in_penalty_box(player))
 	{
@@ -121,7 +120,6 @@ void game_roll(struct Game *game, int roll)
 			game->is_getting_out_of_penalty_box = true;
 			printf("%s is getting out of the penalty box\n", current_player_name);
 			move_player(player, roll);
-			printf("The category is %s\n", get_category_name(current_category(game)));
 			ask_question(current_category(game));
 		}
 		else
@@ -134,7 +132,6 @@ void game_roll(struct Game *game, int roll)
 	else
 	{
 		move_player(player, roll);
-		printf("The category is %s\n", get_category_name(current_category(game)));
 		ask_question(current_category(game));
 	}
 
@@ -142,6 +139,7 @@ void game_roll(struct Game *game, int roll)
 
 void ask_question(struct Category *category)
 {
+	printf("The category is %s\n", get_category_name(category));
 	set_next_question(category);
 	printf("%s\n", get_question_statement(get_next_question(category)));
 }
