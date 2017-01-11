@@ -12,7 +12,7 @@ struct Category
 struct Category * category_new(const char * name)
 {
 	struct Category *category;
-	category = (struct Category *) malloc (sizeof (struct Category));
+	category = (struct Category *) malloc(sizeof(struct Category));
 	strcpy(category->name, name);
 	category->next_question = NULL;
 	category->current_question = 0;

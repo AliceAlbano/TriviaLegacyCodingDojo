@@ -15,7 +15,7 @@ struct Player
 struct Player * player_new()
 {
 	struct Player *player;
-	player = (struct Player *) malloc (sizeof (struct Player));
+	player = (struct Player *) malloc(sizeof(struct Player));
 	player->id = -1;
 	strcpy(player->name, "");
 	player->place = 0;
@@ -85,7 +85,7 @@ void move_player(struct Player *player, int roll)
 
 void correct_answer(struct Player *player)
 {
-	printf ("Answer was correct!!!!\n");
+	printf("Answer was correct!!!!\n");
 	set_player_purse(player, get_player_purse(player) + 1);
 	printf("%s now has %d Gold Coins.\n", get_player_name(player), get_player_purse(player));
 }
