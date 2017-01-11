@@ -74,7 +74,7 @@ bool get_player_in_penalty_box(struct Player *player)
 	return player->in_penalty_box;
 }
 
-void move_player(struct Player *player, int place, int roll)
+void move_player(struct Player *player, int roll)
 {
 		int player_place = get_player_place(player);
 		set_player_place(player, player_place + roll);

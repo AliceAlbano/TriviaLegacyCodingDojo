@@ -53,15 +53,15 @@ TEST(player, move_player)
 {
 	struct Player *player = player_new();
 	set_player_place(player, 3);
-	move_player(player, get_player_place(player), 4);
+	move_player(player, 4);
 	ASSERT_EQ(7, get_player_place(player));
-	move_player(player, get_player_place(player), 5);
+	move_player(player, 5);
 	ASSERT_EQ(0, get_player_place(player));
-	move_player(player, get_player_place(player), 6);
+	move_player(player, 6);
 	ASSERT_EQ(6, get_player_place(player));
-	move_player(player, get_player_place(player), 5);
+	move_player(player, 5);
 	ASSERT_EQ(11, get_player_place(player));
-	move_player(player, get_player_place(player), 3);
+	move_player(player, 3);
 	ASSERT_EQ(2, get_player_place(player));
 	free(player);
 }
