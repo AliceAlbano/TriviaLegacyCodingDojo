@@ -16,6 +16,7 @@ static bool did_player_win (struct Game *game);
 static void initialize_player(struct Game *game);
 static void set_player_num(struct Game *game, int n);
 static void set_current_player(struct Game *game, int n);
+static void set_next_player(struct Game *game);
 
 struct Game
 {
@@ -170,21 +171,12 @@ bool game_was_correctly_answered (struct Game *game)
 		{
 			correct_answer(player);
 			bool winner = did_player_win (game);
-			set_current_player(game, current_player + 1);
-			current_player = get_current_player(game);
-			if (current_player == get_player_num(game))
-				set_current_player(game, 0);
-				current_player = get_current_player(game);
-
+			set_next_player(game);
 			return winner;
 		}
 		else
 		{
-			set_current_player(game, current_player + 1);
-			current_player = get_current_player(game);
-			if (current_player == get_player_num(game))
-				set_current_player(game, 0);
-				current_player = get_current_player(game);
+			set_next_player(game);
 			return true;
 		}
 	}
@@ -193,14 +185,17 @@ bool game_was_correctly_answered (struct Game *game)
 
 		correct_answer(player);
 		bool winner = did_player_win (game);
-		set_current_player(game, current_player + 1);
-		current_player = get_current_player(game);
-		if (current_player == get_player_num(game))
-			set_current_player(game, 0);
-			current_player = get_current_player(game);
-
+		set_next_player(game);
 		return winner;
 	}
+}
+
+void set_next_player(struct Game *game)
+{
+		set_current_player(game, get_current_player(game) + 1);
+		if (get_current_player(game) == get_player_num(game))
+			set_current_player(game, 0);
+
 }
 
 bool game_wrong_answer (struct Game *game)
