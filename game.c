@@ -14,8 +14,6 @@ static void ask_question(struct Category *category);
 static struct Category * current_category(struct Game *game);
 static bool did_player_win(struct Game *game);
 static void initialize_player(struct Game *game);
-static void set_player_num(struct Game *game, int n);
-static void set_current_player(struct Game *game, int n);
 static void set_next_player(struct Game *game);
 
 struct Game
