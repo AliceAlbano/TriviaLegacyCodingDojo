@@ -89,3 +89,17 @@ void correct_answer(struct Player *player)
 	set_player_purse(player, get_player_purse(player) + 1);
 	printf("%s now has %d Gold Coins.\n", get_player_name(player), get_player_purse(player));
 }
+
+bool get_out_of_penalty_box(struct Player *player, int roll)
+{
+	if (roll % 2 != 0)
+	{
+		set_player_in_penalty_box(player, false);
+		return true;
+	}
+	else
+	{
+		set_player_in_penalty_box(player, true);
+		return false;
+	}
+}
