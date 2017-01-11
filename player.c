@@ -76,11 +76,11 @@ bool get_player_in_penalty_box(struct Player *player)
 
 void move_player(struct Player *player, int roll)
 {
-		int player_place = get_player_place(player);
-		set_player_place(player, player_place + roll);
-		if (get_player_place(player) > 11)
-			set_player_place(player, get_player_place(player) - 12);
-		printf ("%s's new location is %d\n", get_player_name(player), get_player_place(player));
+	int player_place = get_player_place(player);
+	set_player_place(player, player_place + roll);
+	if(get_player_place(player) > 11)
+		set_player_place(player, get_player_place(player) - 12);
+	printf("%s's new location is %d\n", get_player_name(player), get_player_place(player));
 }
 
 void correct_answer(struct Player *player)
