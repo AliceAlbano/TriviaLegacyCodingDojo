@@ -162,16 +162,13 @@ struct Category * current_category (struct Game *game)
 bool game_was_correctly_answered (struct Game *game)
 {
 	int current_player = get_current_player(game);
-	char * current_player_name = get_player_name(game->players[current_player]);
 	struct Player *player = player_new();
 	player = game->players[current_player];
 	if (get_player_in_penalty_box(player))
 	{
 		if (game->is_getting_out_of_penalty_box)
 		{
-			printf ("Answer was correct!!!!\n");
-			set_player_purse(player, get_player_purse(player) + 1);
-			printf ("%s now has %d Gold Coins.\n", current_player_name, get_player_purse(player));
+			correct_answer(player);
 			bool winner = did_player_win (game);
 			set_current_player(game, current_player + 1);
 			current_player = get_current_player(game);
@@ -194,10 +191,7 @@ bool game_was_correctly_answered (struct Game *game)
 	else
 	{
 
-		printf ("Answer was correct!!!!\n");
-		set_player_purse(player, get_player_purse(player) + 1);
-		printf ("%s now has %d Gold Coins.\n",
-				current_player_name, get_player_purse(player));
+		correct_answer(player);
 		bool winner = did_player_win (game);
 		set_current_player(game, current_player + 1);
 		current_player = get_current_player(game);
