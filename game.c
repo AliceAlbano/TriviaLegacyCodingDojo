@@ -107,7 +107,6 @@ bool game_add (struct Game *game, char * player_name)
 void game_roll (struct Game *game, int roll)
 {
 	char * current_player_name = get_player_name(game->players[get_current_player(game)]);
-	int player_place = get_player_place(game->players[get_current_player(game)]);
 	int current_player = get_current_player(game);
 	printf ("%s is the current player\n", current_player_name);
 	printf ("They have rolled a %d\n", roll);
@@ -120,14 +119,7 @@ void game_roll (struct Game *game, int roll)
 
 			printf ("%s is getting out of the penalty box\n",
 					current_player_name);
-
-			set_player_place(game->players[current_player], player_place + roll);
-			if (player_place > 11)
-				set_player_place(game->players[current_player], player_place - 12);
-
-			printf ("%s's new location is %d\n",
-					current_player_name,
-					player_place);
+			move_player(game->players[current_player], roll);
 			printf ("The category is %s\n", get_category_name(current_category (game)));
 			ask_question(current_category(game));
 		}
@@ -140,13 +132,7 @@ void game_roll (struct Game *game, int roll)
 	}
 	else
 	{
-		set_player_place(game->players[current_player], player_place + roll);
-		if (player_place > 11)
-			set_player_place(game->players[current_player], player_place - 12);
-
-		printf ("%s's new location is %d\n",
-				current_player_name,
-				player_place);
+		move_player(game->players[current_player], roll);
 		printf ("The category is %s\n", get_category_name(current_category (game)));
 		ask_question(current_category(game));
 	}
