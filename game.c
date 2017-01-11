@@ -195,14 +195,14 @@ void set_next_player(struct Game *game)
 
 bool game_wrong_answer(struct Game *game)
 {
-	printf("Question was incorrectly answered\n");
-	printf("%s was sent to the penalty box\n",
-			get_player_name(game->players[get_current_player(game)]));
-	set_player_in_penalty_box(game->players[get_current_player(game)], true);
+	struct Player *player = player_new();
+	player = game->players[get_current_player(game)];
 
-	set_current_player(game, get_current_player(game) + 1);
-	if (get_current_player(game) == get_player_num(game))
-		set_current_player(game, 0);
+	printf("Question was incorrectly answered\n");
+	printf("%s was sent to the penalty box\n", get_player_name(player));
+
+	set_player_in_penalty_box(player, true);
+	set_next_player(game);
 	return true;
 }
 
