@@ -162,9 +162,8 @@ struct Category * current_category (struct Game *game)
 
 bool game_was_correctly_answered (struct Game *game)
 {
-	int current_player = get_current_player(game);
 	struct Player *player = player_new();
-	player = game->players[current_player];
+	player = game->players[get_current_player(game)];
 	if (get_player_in_penalty_box(player))
 	{
 		if (game->is_getting_out_of_penalty_box)
