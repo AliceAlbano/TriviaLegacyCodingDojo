@@ -1,6 +1,7 @@
 #include "player.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 struct Player
 {
@@ -71,4 +72,13 @@ void set_player_in_penalty_box(struct Player *player, bool b)
 bool get_player_in_penalty_box(struct Player *player)
 {
 	return player->in_penalty_box;
+}
+
+void move_player(struct Player *player, int place, int roll)
+{
+		int player_place = get_player_place(player);
+		set_player_place(player, player_place + roll);
+		if (get_player_place(player) > 11)
+			set_player_place(player, get_player_place(player) - 12);
+		printf ("%s's new location is %d\n", get_player_name(player), get_player_place(player));
 }
