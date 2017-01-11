@@ -82,3 +82,10 @@ void move_player(struct Player *player, int roll)
 			set_player_place(player, get_player_place(player) - 12);
 		printf ("%s's new location is %d\n", get_player_name(player), get_player_place(player));
 }
+
+void correct_answer(struct Player *player)
+{
+	printf ("Answer was correct!!!!\n");
+	set_player_purse(player, get_player_purse(player) + 1);
+	printf("%s now has %d Gold Coins.\n", get_player_name(player), get_player_purse(player));
+}
