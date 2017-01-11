@@ -78,3 +78,18 @@ TEST(player, correct_answer)
 	ASSERT_EQ(3, get_player_purse(player));
 	free(player);
 }
+
+TEST(player, set_player_in_penalty_box)
+{
+	struct Player *player = player_new();
+	bool b;
+	set_player_name(player, "Alice");
+	set_player_in_penalty_box(player, true);
+	b = get_out_of_penalty_box(player, 2);
+	ASSERT_EQ(false, b);
+	ASSERT_EQ(true, get_player_in_penalty_box(player));
+	b = get_out_of_penalty_box(player, 1);
+	ASSERT_EQ(true, b);
+	ASSERT_EQ(false, get_player_in_penalty_box(player));
+	free(player);
+}
