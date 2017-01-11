@@ -65,3 +65,16 @@ TEST(player, move_player)
 	ASSERT_EQ(2, get_player_place(player));
 	free(player);
 }
+
+TEST(player, correct_answer)
+{
+	struct Player *player = player_new();
+	set_player_name(player, "Alice");
+	correct_answer(player);
+	ASSERT_EQ(1, get_player_purse(player));
+	correct_answer(player);
+	ASSERT_EQ(2, get_player_purse(player));
+	correct_answer(player);
+	ASSERT_EQ(3, get_player_purse(player));
+	free(player);
+}
