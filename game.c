@@ -210,5 +210,7 @@ bool did_player_win(struct Game *game)
 	bool win;
 	int purse = get_player_purse(game->players[get_current_player(game)]);
 	win = (purse == 6);
+	if (win)
+		printf("%s has won the game\n", get_player_name(game->players[get_current_player(game)]));
 	return win;
 }
