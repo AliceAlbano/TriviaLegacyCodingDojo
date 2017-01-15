@@ -22,3 +22,33 @@ TEST(game, game_add)
 	free(game);
 }
 
+TEST(game, game_roll)
+{
+	struct Game *game = game_new();
+	char name1[10] = "Alice";
+	char name2[10] = "Bob";
+	char name3[10] = "IA3";
+	bool b;
+	game_add(game, name1);
+	game_add(game, name2);
+	b = game_add(game, name3);
+	EXPECT_EQ(b, true);
+	game_roll(game, 2);
+	game_was_correctly_answered(game);
+	ASSERT_EQ(1, get_current_player(game));
+
+	game_roll(game, 1);
+	game_wrong_answer(game);
+	ASSERT_EQ(2, get_current_player(game));
+
+	game_roll(game, 4);
+	game_was_correctly_answered(game);
+	ASSERT_EQ(0, get_current_player(game));
+
+	game_roll(game, 1);
+	game_was_correctly_answered(game);
+	ASSERT_EQ(1, get_current_player(game));
+
+	free(game);
+}
+
