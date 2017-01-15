@@ -16,6 +16,8 @@ struct Player * player_new()
 {
 	struct Player *player;
 	player = (struct Player *) malloc(sizeof(struct Player));
+	if (player == NULL)
+		return NULL;
 	player->id = -1;
 	strcpy(player->name, "");
 	player->place = 0;
