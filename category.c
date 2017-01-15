@@ -8,11 +8,12 @@ struct Category
 	int current_question ;
 };
 
-//TODO: Test malloc return, and length of the name
 struct Category * category_new(const char * name)
 {
 	struct Category *category;
 	category = (struct Category *) malloc(sizeof(struct Category));
+	if (category == NULL)
+		return NULL;
 	strcpy(category->name, name);
 	category->next_question = NULL;
 	category->current_question = 0;
