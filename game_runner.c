@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "game.h"
 
-static bool not_a_winner;
+static bool winner;
 
 int main()
 {
@@ -22,13 +22,13 @@ int main()
 
 		if (rand() % 9 == 7)
 		{
-			not_a_winner = game_wrong_answer(a_game);
+			winner = game_wrong_answer(a_game);
 		}
 		else
 		{
-			not_a_winner = game_correct_answer(a_game);
+			winner = game_correct_answer(a_game);
 		}
 	}
-	while (not_a_winner);
+	while (!winner);
 	return EXIT_SUCCESS;
 }

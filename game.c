@@ -170,7 +170,7 @@ bool game_correct_answer(struct Game *game)
 		else
 		{
 			set_next_player(game);
-			return true;
+			return false;
 		}
 	}
 	else
@@ -201,11 +201,14 @@ bool game_wrong_answer(struct Game *game)
 
 	set_player_in_penalty_box(player, true);
 	set_next_player(game);
-	return true;
+	return false;
 }
 
 
 bool did_player_win(struct Game *game)
 {
-	return !(get_player_purse(game->players[ get_current_player(game)]) == 6);
+	bool win;
+	int purse = get_player_purse(game->players[get_current_player(game)]);
+	win = (purse == 6);
+	return win;
 }
