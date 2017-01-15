@@ -57,7 +57,8 @@ struct Game *game_new()
 	struct Game *game;
 
 	game = (struct Game *) malloc(sizeof(struct Game));
-	//TODO: test return value of malloc and return NULL if fail
+	if (game == NULL)
+		return NULL;
 
 	initialize_player(game);
 
