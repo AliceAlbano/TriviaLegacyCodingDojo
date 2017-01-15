@@ -154,7 +154,7 @@ struct Category * current_category(struct Game *game)
 	return game->rock;
 }
 
-bool game_was_correctly_answered(struct Game *game)
+bool game_correct_answer(struct Game *game)
 {
 	struct Player *player = player_new();
 	player = game->players[get_current_player(game)];

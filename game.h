@@ -19,7 +19,7 @@ bool game_add(struct Game *game, char *player_name);
 
 void game_roll(struct Game *game, int roll);
 
-bool game_was_correctly_answered(struct Game *game);
+bool game_correct_answer(struct Game *game);
 bool game_wrong_answer(struct Game *game);
 
 #endif /* GAME_H */

@@ -34,7 +34,7 @@ TEST(game, game_roll)
 	b = game_add(game, name3);
 	EXPECT_EQ(b, true);
 	game_roll(game, 2);
-	game_was_correctly_answered(game);
+	game_correct_answer(game);
 	ASSERT_EQ(1, get_current_player(game));
 
 	game_roll(game, 1);
@@ -42,11 +42,11 @@ TEST(game, game_roll)
 	ASSERT_EQ(2, get_current_player(game));
 
 	game_roll(game, 4);
-	game_was_correctly_answered(game);
+	game_correct_answer(game);
 	ASSERT_EQ(0, get_current_player(game));
 
 	game_roll(game, 1);
-	game_was_correctly_answered(game);
+	game_correct_answer(game);
 	ASSERT_EQ(1, get_current_player(game));
 
 	free(game);

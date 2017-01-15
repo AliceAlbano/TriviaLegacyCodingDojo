@@ -26,7 +26,7 @@ int main()
 		}
 		else
 		{
-			not_a_winner = game_was_correctly_answered(a_game);
+			not_a_winner = game_correct_answer(a_game);
 		}
 	}
 	while (not_a_winner);
