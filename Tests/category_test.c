@@ -1,12 +1,18 @@
 #include <gtest/gtest.h>
 #include "../category.h"
 
+TEST(category, builder)
+{
+	struct Category *category = category_new("Rock");
+//	ASSERT_NE(category, nullptr);
+	free(category);
+}
+
 TEST(category, get_category_name)
 {
 	struct Category *category = category_new("Rock");
 	char *name = get_category_name(category);
 	ASSERT_EQ(0, strcmp(name, "Rock"));
-	ASSERT_NE(0, strcmp(name, "Ooops"));
 	free(category);
 }
 
